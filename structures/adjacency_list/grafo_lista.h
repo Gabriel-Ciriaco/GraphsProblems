@@ -28,5 +28,4 @@ void buscaProfundidadeLista(GrafoLista *g, int vertice, int *visitados);
 void encontraComponentesLista(GrafoLista *g);
 void dijkstraLista(GrafoLista *g, int origem);
 
-
 #endif // GRAFO_LISTA_H_INCLUDED

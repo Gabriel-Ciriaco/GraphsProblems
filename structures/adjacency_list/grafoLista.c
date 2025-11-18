@@ -1,5 +1,5 @@
 #include "grafo_lista.h"
-#include "../Problemas-Grafos/Problemas-Grafos/minHeap.h"
+#include "../minHeap.h"
 
 #include<stdlib.h>
 #include<limits.h>
