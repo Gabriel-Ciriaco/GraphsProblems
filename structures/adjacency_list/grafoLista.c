@@ -1,16 +1,20 @@
-#include "grafoLista.h"
+#include "grafo_lista.h"
+#include "../Problemas-Grafos/Problemas-Grafos/minHeap.h"
 
-#include <stdio.h>
 #include<stdlib.h>
+#include<limits.h>
 
+#define MAX_HEAP 10000
 
-No *criaNo(int vertice) {
-    No *novoNo = (No *)malloc(sizeof(No));
+No *criaNo(int vertice, int peso)
+{
+    No *novoNo = (No*)malloc(sizeof(No));
     if (novoNo == NULL)
     {
         return NULL;
     }
     novoNo->vertice = vertice;
+    novoNo->peso = peso;
     novoNo->proximo = NULL;
     return novoNo;
 }
@@ -61,27 +65,27 @@ void destroiGrafoLista(GrafoLista *g)
     free(g);
 }
 
-void insereArestaLista(GrafoLista *g, int origem, int destino)
+void insereArestaLista(GrafoLista *g, int origem, int destino, int peso)
 {
     if (g == NULL || origem < 0 || destino < 0 || origem >= g->numVertices || destino >= g->numVertices)
     {
         return;
     }
 
-    No *novoNo = criaNo(destino);
+    No *novoNo = criaNo(destino, peso);
     if(novoNo == NULL)
     {
-        printf("Erro ao alocar memÛria!");
-        return;
+        printf("Erro ao alocar mem√≥ria!");
+        return NULL;
     }
     novoNo->proximo = g->listasAdj[origem];
     g->listasAdj[origem] = novoNo;
 
-    novoNo = criaNo(origem);
+    novoNo = criaNo(origem, peso);
     if(novoNo == NULL)
     {
-        printf("Erro ao alocar memÛria!");
-        return;
+        printf("Erro ao alocar mem√≥ria!");
+        return NULL;
     }
     novoNo->proximo = g->listasAdj[destino];
     g->listasAdj[destino] = novoNo;
@@ -156,48 +160,18 @@ bool existeArestaLista(GrafoLista *g, int origem, int destino)
     return false;
 }
 
-void imprimeArestasLista(GrafoLista *g)
-{
-    if (!g)
-    {
-        printf("\nGrafo nulo!\n");
-
-        return;
-    }
-
-    for (int i = 0; i < g->numVertices; i++)
-    {
-        No * atual = g->listasAdj[i];
-
-        if (!atual) continue;
-
-        No * prox = atual->proximo;
-
-        while (prox)
-        {
-            if (existeArestaLista(g, atual->vertice, prox->vertice))
-            {
-                printf("%d %d\n", atual->vertice, prox->vertice);
-            }
-
-            atual = prox;
-            prox = prox->proximo;
-        }
-    }
-}
-
 void imprimeGrafoLista(GrafoLista *g)
 {
     if (g == NULL)
     {
-        printf("\nGrafo nulo!\n");
+        printf("\nGrafo vazio!\n");
         return;
     }
 
     for (int i = 0; i < g->numVertices; i++)
     {
         No *atual = g->listasAdj[i];
-        printf("VÈrtice %d: ", i);
+        printf("V√©rtice %d: ", i);
         while (atual != NULL)
         {
             printf(" -> %d ", atual->vertice);
@@ -254,10 +228,10 @@ void buscaProfundidadeLista(GrafoLista *g, int vertice, int *visitados)
 
 	No *atual = g->listasAdj[vertice];
 	/*
-    Percorre a lista correspondente ao vÈrtice atual na lista de adjacÍncia
-    para verificar todos os vÈrtices diretamente conectados a ele.
-    Se encontrar um vÈrtice adjacente que ainda n„o foi visitado,
-    chama a DFS recursivamente para explorar esse novo vÈrtice.
+    Percorre a lista correspondente ao v√©rtice atual na lista de adjac√™ncia
+    para verificar todos os v√©rtices diretamente conectados a ele.
+    Se encontrar um v√©rtice adjacente que ainda n√£o foi visitado,
+    chama a DFS recursivamente para explorar esse novo v√©rtice.
 	*/
 	while(atual != NULL)
 	{
@@ -272,23 +246,23 @@ void buscaProfundidadeLista(GrafoLista *g, int vertice, int *visitados)
 void encontraComponentesLista(GrafoLista *g)
 {
 	/*
-	Vari·vel respons·vel por guardar o n˙mero de componentes.
+	Vari√°vel respons√°vel por guardar o n√∫mero de componentes.
 	*/
 	int componente = 0;
 	int i = 0;
 	/*
-	Vetor respos·vel por guardar se um vÈrtice j·
-	foi visitado ou n„o.
+	Vetor respos√°vel por guardar se um v√©rtice j√°
+	foi visitado ou n√£o.
 	*/
 	int *visitados = malloc((g->numVertices) * sizeof(int));
 	if(visitados == NULL)
 	{
-		printf("Erro ao alocar memÛria!");
+		printf("Erro ao alocar mem√≥ria!");
 		return;
 	}
 	/*
 	Inicializando o vetor com zeros para indicar que
-	nenhum vÈrtice foi visitado.
+	nenhum v√©rtice foi visitado.
 	*/
 	for(i = 0; i < g->numVertices; i++)
 	{
@@ -302,7 +276,7 @@ void encontraComponentesLista(GrafoLista *g)
 			componente++;
 			printf("Componente %d: ", componente);
 			/*
-			Chama a funÁ„o dfs_listaAdj() que È respons·vel por
+			Chama a fun√ß√£o dfs_listaAdj() que √© respons√°vel por
 			fazer a busca em profundidade.
 			*/
 			buscaProfundidadeLista(g, i, visitados);
@@ -311,4 +285,72 @@ void encontraComponentesLista(GrafoLista *g)
 	}
 
 	free(visitados);
+}
+
+void dijkstraLista(GrafoLista *g, int origem)
+{
+    /*
+    Cria um array de dist√¢ncias dist[]  de tamanho V
+    e incializa todos os valores com infinito (‚àû).
+    */
+    int *distancias = malloc(g->numVertices * sizeof(int));
+    int *visitados = malloc(g->numVertices *sizeof(int));
+    MinHeap *filaPrioridade = cria_heap(MAX_HEAP);
+    if(distancias == NULL || visitados == NULL || filaPrioridade == NULL)
+    {
+        printf("\nErro ao alocar mem√≥ria!\n");
+        free(distancias);
+        free(visitados);
+        free(filaPrioridade);
+        return;
+    }
+
+    for(int i = 0; i < g->numVertices; i++)
+    {
+        distancias[i] = INT_MAX;
+        visitados[i] = 0;
+    }
+
+    /*
+    Defina dist[origem]=0 e insira o v√©rtice
+    na fila de prioridade.
+    */
+    distancias[origem] = 0;
+    push(filaPrioridade, origem, 0);
+
+    while(!empty(filaPrioridade))
+    {
+        Vertice atual = pop(filaPrioridade);
+        int u = atual.v;
+
+        if(visitados[u] == 1) /*Se o v√©rtice j√° foi visitado, vamos para o pr√≥ximo.*/
+        {
+            continue;
+        }
+        visitados[u] = 1;
+
+        No *no = g->listasAdj[u];
+        while(no != NULL)
+        {
+            int vertice = no->vertice;
+            int peso = no->peso;
+
+            if((distancias[u]) != INT_MAX && ((distancias[u] + peso) < distancias[vertice]))
+            {
+                distancias[vertice] = distancias[u] + peso;
+                push(filaPrioridade, vertice, distancias[vertice]);
+            }
+
+            no = no->proximo;
+        }
+    }
+    printf("Caminho m√≠nimo de %d at√© todos os v√©rtices:\n", origem);
+    for(int i = 0; i < g->numVertices; i++)
+    {
+        printf("%d -> %d: %d\n", origem, i, distancias[i]);
+    }
+    free(distancias);
+    free(visitados);
+    free(filaPrioridade->heap);
+    free(filaPrioridade);
 }
