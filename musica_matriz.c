@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "musicas.h"
-#include "grafoMatriz.h"
+#include "structures/adjacency_matrix/grafoMatriz.h"
 
 /* montar grafo matriz */
 void montarGrafoMatriz(GrafoMatriz* g)

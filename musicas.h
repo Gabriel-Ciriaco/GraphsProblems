@@ -1,10 +1,10 @@
-
 #ifndef MUSICAS_H
 #define MUSICAS_H
 
+#include "structures/adjacency_list/grafoLista.h"
+#include "structures/adjacency_matrix/grafoMatriz.h"
+
 #include <stdbool.h>
-#include "grafoLista.h"
-#include "grafoMatriz.h"
 
 #define MAX_MUSICAS 52
 

@@ -2,8 +2,8 @@
 #include <stdlib.h>
 
 #include "musicas.h"
-#include "grafoLista.h"
-#include "grafoMatriz.h"
+#include "structures/adjacency_list/grafoLista.h"
+#include "structures/adjacency_matrix/grafoMatriz.h"
 
 /* exibe catalogo */
 void exibirListaMusicas() {
