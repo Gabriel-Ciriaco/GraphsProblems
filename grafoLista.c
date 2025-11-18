@@ -1,5 +1,5 @@
 #include "grafoLista.h"
-
+#include<stdio.h>
 #include<stdlib.h>
 
 No *criaNo(int vertice) {
@@ -70,7 +70,7 @@ void insereArestaLista(GrafoLista *g, int origem, int destino)
     if(novoNo == NULL)
     {
         printf("Erro ao alocar memória!");
-        return NULL;
+        return;
     }
     novoNo->proximo = g->listasAdj[origem];
     g->listasAdj[origem] = novoNo;
@@ -79,7 +79,7 @@ void insereArestaLista(GrafoLista *g, int origem, int destino)
     if(novoNo == NULL)
     {
         printf("Erro ao alocar memória!");
-        return NULL;
+        return;
     }
     novoNo->proximo = g->listasAdj[destino];
     g->listasAdj[destino] = novoNo;
