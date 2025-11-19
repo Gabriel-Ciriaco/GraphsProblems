@@ -31,6 +31,17 @@ GrafoMatriz *criaGrafoMatriz(int vertices)
     for (int i = 0; i < vertices; i++)
     {
         g->matriz[i] = (int *)malloc(vertices * sizeof(int));
+
+        if (g->matriz[i] == NULL)
+        {
+            while(i > 0) free(g->matriz[--i]);
+
+            free(g->matriz);
+
+free(g);
+
+            return NULL;
+        }
     }
 
     for (int i = 0; i < vertices; i++)
