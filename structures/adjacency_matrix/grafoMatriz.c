@@ -1,4 +1,5 @@
 #include "grafoMatriz.h"
+#include "../../musicas.h" // TO-DO: REMOVER ISTO DEPOIS.
 #include "../min_heap/minHeap.h"
 
 #include "../queue/queue.h"
@@ -198,7 +199,7 @@ int encontraMaisPopularMatriz(GrafoMatriz *g)
 void buscaProfundidadeMatriz(GrafoMatriz *g, int vertice, int *visitados)
 {
 	visitados[vertice] = 1; //Seta o v�rtice como visitado.
-	printf("%d ", vertice);
+	printf("%s ", musicas[vertice]); //TO-DO: REMOVER ISSO DEPOIS.
 
 	/*
     Percorre a linha correspondente ao v�rtice atual na matriz de adjac�ncia
@@ -229,7 +230,6 @@ void buscaLarguraMatriz(GrafoMatriz *g, int vertice, int *visitados)
     {
         int v = popQueue(&fila);
 
-        printf("%d ", v);
 
         // V�rtices adjacentes.
         for (int i = 0; i < g->numVertices; i++)
@@ -277,7 +277,7 @@ void encontraComponentesMatriz(GrafoMatriz *g)
 		if(visitados[i] == 0)
 		{
 			componente++;
-			printf("Componente %d: ", componente);
+			printf("Genero %d: ", componente);
 			/*
 			Chama a fun��o dfs_matrizAdj() que � respons�vel por
 			fazer a busca em profundidade.

@@ -1,4 +1,5 @@
 #include "grafoLista.h"
+#include "../../musicas.h"
 
 #include "../min_heap/minHeap.h"
 #include "../queue/queue.h"
@@ -251,7 +252,7 @@ int encontraMaisPopularLista(GrafoLista *g)
 void buscaProfundidadeLista(GrafoLista *g, int vertice, int *visitados)
 {
 	visitados[vertice] = 1;
-	printf("%d ", vertice);
+	printf("%s ", musicas[vertice]); // TO-DO: REMOVER ISSO DEPOIS.
 
 	No *atual = g->listasAdj[vertice];
 	/*
@@ -284,8 +285,6 @@ void buscaLarguraLista(GrafoLista *g, int vertice, int *visitados)
     while(fila.top)
     {
         int v = popQueue(&fila);
-
-        printf("%d ", v);
 
         // Vértices adjacentes.
         for (int i = 0; i < g->numVertices; i++)
@@ -333,7 +332,7 @@ void encontraComponentesLista(GrafoLista *g)
 		if(visitados[i] == 0)
 		{
 			componente++;
-			printf("Componente %d: ", componente);
+			printf("Genero %d: ", componente); //TO-DO: REMOVER DEPOIS
 			/*
 			Chama a função dfs_listaAdj() que é responsável por
 			fazer a busca em profundidade.
