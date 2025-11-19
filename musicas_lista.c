@@ -83,78 +83,78 @@ void montarGrafoLista(GrafoLista* g)
     }
 
     /* KPOP */
-    insereArestaLista(g,0,1);
-    insereArestaLista(g,0,2);
-    insereArestaLista(g,0,3);
-    insereArestaLista(g,0,34);
-    insereArestaLista(g,0,37);
-    insereArestaLista(g,1,3);
-    insereArestaLista(g,3,34);
-    insereArestaLista(g,1,28);
-    insereArestaLista(g,31,32);
-    insereArestaLista(g,32,33);
-    insereArestaLista(g,27,28);
-    insereArestaLista(g,27,3);
-    insereArestaLista(g,27,25);
+    insereArestaLista(g,0,1,0);
+    insereArestaLista(g,0,2,0);
+    insereArestaLista(g,0,3,0);
+    insereArestaLista(g,0,34,0);
+    insereArestaLista(g,0,37,0);
+    insereArestaLista(g,1,3,0);
+    insereArestaLista(g,3,34,0);
+    insereArestaLista(g,1,28,0);
+    insereArestaLista(g,31,32,0);
+    insereArestaLista(g,32,33,0);
+    insereArestaLista(g,27,28,0);
+    insereArestaLista(g,27,3,0);
+    insereArestaLista(g,27,25,0);
 
     /* RAP */
-    insereArestaLista(g,10,11);
-    insereArestaLista(g,11,12);
-    insereArestaLista(g,10,12);
+    insereArestaLista(g,10,11,0);
+    insereArestaLista(g,11,12,0);
+    insereArestaLista(g,10,12,0);
 
     /* ROCK */
-    insereArestaLista(g,13,14);
-    insereArestaLista(g,13,15);
-    insereArestaLista(g,16,17);
-    insereArestaLista(g,17,18);
-    insereArestaLista(g,15,16);
-    insereArestaLista(g,16,35);
-    insereArestaLista(g,18,36);
+    insereArestaLista(g,13,14,0);
+    insereArestaLista(g,13,15,0);
+    insereArestaLista(g,16,17,0);
+    insereArestaLista(g,17,18,0);
+    insereArestaLista(g,15,16,0);
+    insereArestaLista(g,16,35,0);
+    insereArestaLista(g,18,36,0);
 
     /* POP */
-    insereArestaLista(g,4,5);
-    insereArestaLista(g,5,6);
-    insereArestaLista(g,6,7);
-    insereArestaLista(g,4,9);
-    insereArestaLista(g,8,9);
-    insereArestaLista(g,4,8);
-    insereArestaLista(g,6,8);
-    insereArestaLista(g,7,5);
+    insereArestaLista(g,4,5,0);
+    insereArestaLista(g,5,6,0);
+    insereArestaLista(g,6,7,0);
+    insereArestaLista(g,4,9,0);
+    insereArestaLista(g,8,9,0);
+    insereArestaLista(g,4,8,0);
+    insereArestaLista(g,6,8,0);
+    insereArestaLista(g,7,5,0);
 
     /* PAGODE */
-    insereArestaLista(g,19,20);
-    insereArestaLista(g,20,21);
-    insereArestaLista(g,21,22);
-    insereArestaLista(g,22,19);
+    insereArestaLista(g,19,20,0);
+    insereArestaLista(g,20,21,0);
+    insereArestaLista(g,21,22,0);
+    insereArestaLista(g,22,19,0);
 
     /* MAMONAS */
-    insereArestaLista(g,23,24);
+    insereArestaLista(g,23,24,0);
 
     /* INDIE */
-    insereArestaLista(g,35,36);
-    insereArestaLista(g,16,35);
+    insereArestaLista(g,35,36,0);
+    insereArestaLista(g,16,35,0);
 
     /* BRUNO MARS */
-    insereArestaLista(g,49,50);
-    insereArestaLista(g,49,51);
-    insereArestaLista(g,50,51);
+    insereArestaLista(g,49,50,0);
+    insereArestaLista(g,49,51,0);
+    insereArestaLista(g,50,51,0);
 
     /* SKANK */
-    insereArestaLista(g,45,46);
-    insereArestaLista(g,46,47);
-    insereArestaLista(g,45,47);
+    insereArestaLista(g,45,46,0);
+    insereArestaLista(g,46,47,0);
+    insereArestaLista(g,45,47,0);
 
     /* LEGIAO / RAIMUNDOS */
-    insereArestaLista(g,41,42);
-    insereArestaLista(g,42,43);
-    insereArestaLista(g,41,43);
+    insereArestaLista(g,41,42,0);
+    insereArestaLista(g,42,43,0);
+    insereArestaLista(g,41,43,0);
 
     /* POP ROCK */
-    insereArestaLista(g,29,30);
-    insereArestaLista(g,9,29);
+    insereArestaLista(g,29,30,0);
+    insereArestaLista(g,9,29,0);
 
     /* ELVIS */
-    insereArestaLista(g,48,35);
+    insereArestaLista(g,48,35,0);
 }
 
 

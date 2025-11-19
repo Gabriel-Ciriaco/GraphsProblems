@@ -9,7 +9,7 @@
 
 typedef enum
 {
-    LISTA_ADJACENCIA,
+    LISTA_ADJACENCIA=1,
     MATRIZ_ADJACENCIA
 } tipoImplementacaoGrafo;
 
@@ -38,7 +38,14 @@ typedef struct
     int (*encontraMaisPopular)(void *impl);
 
     void (*buscaProfundidade)(void *impl, int vertice, int *visitados);
+    void (*buscaLargura) (void *impl, int vertice, int *visitados);
+
     void (*encontraComponentes)(void *impl);
+
+    void (*recomendacaoDireta)(void *impl, int vertice, int* recomendacoes);
+    void (*recomendacaoAmigoDeAmigo)(void *impl, int vertice, int* recomendacoes);
+
+    bool (*verificarCaminho)(void* impl, int origem, int destino);
 
 } OperacoesGrafos;
 
@@ -78,7 +85,14 @@ int encontraMaisPopular(Grafo *g);
 
 void buscaProfundidade(Grafo *g, int vertice, int *visitados);
 
+void buscaLargura(Grafo *g, int vertice, int *visitados);
+
+void recomendacaoDireta(Grafo *g, int vertice, int * recomendacoes);
+
+void recomendacaoAmigoDeAmigo(Grafo *g, int vertice, int * recomendacoes);
+
 void encontraComponentes(Grafo *g);
 
+bool verificarCaminho(Grafo* g, int origem, int destino);
 
 #endif // GRAPHS_H_INCLUDED

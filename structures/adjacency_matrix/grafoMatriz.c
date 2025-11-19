@@ -1,5 +1,7 @@
 #include "grafoMatriz.h"
 
+#include "../queue/queue.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -203,6 +205,37 @@ void buscaProfundidadeMatriz(GrafoMatriz *g, int vertice, int *visitados)
 	}
 }
 
+void buscaLarguraMatriz(GrafoMatriz *g, int vertice, int *visitados)
+{
+    if (!g) return;
+
+    Queue fila = criarQueue();
+
+    pushQueue(&fila, vertice);
+
+    visitados[vertice] = 1;
+
+    while(fila.top)
+    {
+        int v = popQueue(&fila);
+
+        printf("%d ", v);
+
+        // Vértices adjacentes.
+        for (int i = 0; i < g->numVertices; i++)
+        {
+            if (existeArestaMatriz(g, v, i) && !visitados[i])
+            {
+                pushQueue(&fila, i); // Adicionamos na fila.
+
+                visitados[i] = 1; // Evita duplicatas.
+            }
+        }
+    }
+
+    destroiQueue(&fila);
+}
+
 void encontraComponentesMatriz(GrafoMatriz *g)
 {
 	/*
@@ -217,7 +250,7 @@ void encontraComponentesMatriz(GrafoMatriz *g)
 	int *visitados = (int*)malloc((g->numVertices) * sizeof(int));
 	if(visitados == NULL)
 	{
-		printf("Erro ao aloar memória!");
+		printf("Erro ao alocar memória!");
 		return;
 	}
 	/*
@@ -245,4 +278,141 @@ void encontraComponentesMatriz(GrafoMatriz *g)
 	}
 
 	free(visitados);
+}
+
+
+void recomendacaoDiretaMatriz(GrafoMatriz* g, int vertice, int* recomendacoes)
+{
+    if (g == NULL || recomendacoes == NULL)
+    {
+        printf("grafo nulo\n");
+        return;
+    }
+
+    if (vertice < 0)
+    {
+        printf("vertice invalido\n");
+        return;
+    }
+
+    int rIdx = 0; // Indice de recomendacoes.
+
+    for (int j = 0; j < g->numVertices; j++)
+    {
+        if (existeArestaMatriz(g, vertice, j))
+        {
+            recomendacoes[rIdx++] = j;
+        }
+    }
+}
+
+
+void recomendacaoAmigoDeAmigoMatriz(GrafoMatriz* g, int vertice, int* recomendacoes)
+{
+    if (g == NULL)
+    {
+        printf("grafo nulo\n");
+        return;
+    }
+
+    if (vertice < 0)
+    {
+        printf("vertice invalido\n");
+        return;
+    }
+
+    int* direto = (int*) malloc(g->numVertices * sizeof(int));
+    int* marcado = (int*) malloc(g->numVertices * sizeof(int));
+
+    if (!direto || !marcado)
+    {
+        if (direto)
+            free(direto);
+
+        if (marcado)
+            free(marcado);
+
+        printf("\n[RECOMENDACAO-AMIGO-AMIGO-MATRIZ: Não foi possível alocar memória.\n");
+        return;
+    }
+
+    for (int i = 0; i < g->numVertices; i++)
+    {
+        direto[i] = 0;
+        marcado[i] = 0;
+    }
+
+    for (int j = 0; j < g->numVertices; j++)
+    {
+        if (existeArestaMatriz(g, vertice, j))
+        {
+            direto[j] = 1;
+        }
+    }
+
+
+    int rIdx = 0; // Indice de recomendacoes
+
+    for (int amigo = 0; amigo < g->numVertices; amigo++)
+    {
+        if (existeArestaMatriz(g, vertice, amigo))
+        {
+            for (int amigo2 = 0; amigo2 < g->numVertices; amigo2++)
+            {
+                if (existeArestaMatriz(g,amigo, amigo2))
+                {
+                    if (amigo2 != vertice && !direto[amigo2] && !marcado[amigo2])
+                    {
+                        marcado[amigo2] = 1;
+
+                        recomendacoes[rIdx++] = amigo2;
+                    }
+                }
+            }
+        }
+    }
+
+    free(direto);
+    free(marcado);
+}
+
+
+bool verificarCaminhoMatriz(GrafoMatriz* g, int origem, int destino)
+{
+    if (g == NULL)
+    {
+        return false;
+    }
+
+    if (origem < 0 || destino < 0 || origem >= g->numVertices || destino >= g->numVertices)
+    {
+        return false;
+    }
+
+    if (existeArestaMatriz(g, origem, destino))
+    {
+        return true;
+    }
+
+    int* visitados = (int*)malloc(sizeof(int) * g->numVertices);
+
+    if (visitados == NULL)
+    {
+        printf("erro de memoria\n");
+        return false;
+    }
+
+    for (int i = 0; i < g->numVertices; i++)
+    {
+        visitados[i] = 0;
+    }
+
+    buscaProfundidadeMatriz(g, origem, visitados);
+
+
+    int resp = visitados[destino];
+
+    free(visitados);
+
+    return resp == 1;
 }

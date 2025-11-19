@@ -33,7 +33,11 @@ OperacoesGrafos escolheOperacoes(int tipo)
         operacoes.calculaGrau = (int (*)(void*,int)) calculaGrauLista;
         operacoes.encontraMaisPopular = (int (*)(void*)) encontraMaisPopularLista;
         operacoes.buscaProfundidade = (void (*)(void*,int,int*)) buscaProfundidadeLista;
+        operacoes.buscaLargura = (void (*) (void*,int,int*)) buscaLarguraLista;
         operacoes.encontraComponentes = (void (*)(void*)) encontraComponentesLista;
+        operacoes.recomendacaoDireta = (void (*) (void*, int, int*)) recomendacaoDiretaLista;
+        operacoes.recomendacaoAmigoDeAmigo = (void (*) (void*, int, int*)) recomendacaoAmigoDeAmigoLista;
+        operacoes.verificarCaminho = (bool (*) (void*, int, int)) verificarCaminhoLista;
     }
     else if (MATRIZ_ADJACENCIA)
     {
@@ -46,7 +50,11 @@ OperacoesGrafos escolheOperacoes(int tipo)
         operacoes.calculaGrau = (int (*)(void*,int)) calculaGrauMatriz;
         operacoes.encontraMaisPopular = (int (*)(void*)) encontraMaisPopularMatriz;
         operacoes.buscaProfundidade = (void (*)(void*,int,int*)) buscaProfundidadeMatriz;
+        operacoes.buscaLargura = (void (*) (void*,int,int*)) buscaLarguraMatriz;
         operacoes.encontraComponentes = (void (*)(void*)) encontraComponentesMatriz;
+        operacoes.recomendacaoDireta = (void (*) (void*, int, int*)) recomendacaoDiretaMatriz;
+        operacoes.recomendacaoAmigoDeAmigo = (void (*) (void*, int, int*)) recomendacaoAmigoDeAmigoMatriz;
+        operacoes.verificarCaminho = (bool (*) (void*, int, int)) verificarCaminhoMatriz;
     }
 
     return operacoes;
@@ -147,9 +155,40 @@ void buscaProfundidade(Grafo *g, int vertice, int *visitados)
     g->operacoes.buscaProfundidade(g->impl, vertice, visitados);
 }
 
+void buscaLargura(Grafo *g, int vertice, int * visitados)
+{
+    if (!g)
+        return;
+
+    g->operacoes.buscaLargura(g->impl, vertice, visitados);
+}
+
 void encontraComponentes(Grafo *g)
 {
     if (!g) return;
 
     g->operacoes.encontraComponentes(g->impl);
+}
+
+void recomendacaoDireta(Grafo* g, int vertice, int* recomendacoes)
+{
+    if (!g) return;
+
+    g->operacoes.recomendacaoDireta(g->impl, vertice, recomendacoes);
+}
+
+void recomendacaoAmigoDeAmigo(Grafo* g, int vertice, int* recomendacoes)
+{
+    if (!g) return;
+
+    g->operacoes.recomendacaoAmigoDeAmigo(g->impl, vertice, recomendacoes);
+}
+
+
+bool verificarCaminho(Grafo* g, int origem, int destino)
+{
+    if (!g)
+        return false;
+
+    return g->operacoes.verificarCaminho(g->impl, origem, destino);
 }

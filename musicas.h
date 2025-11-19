@@ -1,30 +1,19 @@
 #ifndef MUSICAS_H
 #define MUSICAS_H
 
-#include "structures/adjacency_list/grafoLista.h"
-#include "structures/adjacency_matrix/grafoMatriz.h"
+#include "structures/graphs.h"
 
 #include <stdbool.h>
 
 #define MAX_MUSICAS 52
+#define NUM_MUSICAS_BASE_PLAYLIST 3
+#define MUSICA_NAO_RECOMENDADA -1
 
 extern char* musicas[MAX_MUSICAS];
 
-/* lista */
-void montarGrafoLista(GrafoLista* g);
-void recomendarMusicasLista(GrafoLista* g, int id);
-void recomendarAmigoDeAmigoLista(GrafoLista* g, int id);
-bool verificarCaminhoLista(GrafoLista* g, int origem, int destino);
-void criarPlaylistLista(GrafoLista* g, int musicasIds[3]);
-
-
-
-
-/* matriz */
-void montarGrafoMatriz(GrafoMatriz* g);
-void recomendarMusicasMatriz(GrafoMatriz* g, int id);
-void recomendarAmigoDeAmigoMatriz(GrafoMatriz* g, int id);
-bool verificarCaminhoMatriz(GrafoMatriz* g, int origem, int destino);
-void criarPlaylistMatriz(GrafoMatriz* g, int musicasIds[3]);
+void montarGrafo(Grafo* g);
+void recomendarMusicas(Grafo* g, int id);
+void recomendarAmigoDeAmigo(Grafo* g, int id);
+void criarPlaylist(Grafo* g, int musicasIds[NUM_MUSICAS_BASE_PLAYLIST]);
 
 #endif

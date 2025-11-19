@@ -1,8 +1,11 @@
-#include "grafo_lista.h"
-#include "../minHeap.h"
+#include "grafoLista.h"
 
-#include<stdlib.h>
-#include<limits.h>
+#include "../min_heap/minHeap.h"
+#include "../queue/queue.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
 
 #define MAX_HEAP 10000
 
@@ -76,7 +79,6 @@ void insereArestaLista(GrafoLista *g, int origem, int destino, int peso)
     if(novoNo == NULL)
     {
         printf("Erro ao alocar memória!");
-        return NULL;
     }
     novoNo->proximo = g->listasAdj[origem];
     g->listasAdj[origem] = novoNo;
@@ -85,7 +87,6 @@ void insereArestaLista(GrafoLista *g, int origem, int destino, int peso)
     if(novoNo == NULL)
     {
         printf("Erro ao alocar memória!");
-        return NULL;
     }
     novoNo->proximo = g->listasAdj[destino];
     g->listasAdj[destino] = novoNo;
@@ -160,6 +161,32 @@ bool existeArestaLista(GrafoLista *g, int origem, int destino)
     return false;
 }
 
+void imprimeArestasLista(GrafoLista *g)
+{
+    if (g == NULL)
+    {
+        printf("\nGrafo vazio!\n");
+        return;
+    }
+
+    for (int i = 0; i < g->numVertices; i++)
+    {
+        No *atual = g->listasAdj[i];
+
+        while (atual != NULL)
+        {
+            if (atual->vertice <= i &&
+                existeArestaLista(g, i, atual->vertice))
+            {
+                printf("%d %d\n", i, atual->vertice);
+            }
+
+            atual = atual->proximo;
+        }
+    }
+
+}
+
 void imprimeGrafoLista(GrafoLista *g)
 {
     if (g == NULL)
@@ -171,7 +198,7 @@ void imprimeGrafoLista(GrafoLista *g)
     for (int i = 0; i < g->numVertices; i++)
     {
         No *atual = g->listasAdj[i];
-        printf("Vértice %d: ", i);
+        printf("Vertice %d: ", i);
         while (atual != NULL)
         {
             printf(" -> %d ", atual->vertice);
@@ -241,6 +268,38 @@ void buscaProfundidadeLista(GrafoLista *g, int vertice, int *visitados)
 		}
 		atual = atual->proximo;
 	}
+}
+
+
+void buscaLarguraLista(GrafoLista *g, int vertice, int *visitados)
+{
+    if (!g) return;
+
+    Queue fila = criarQueue();
+
+    pushQueue(&fila, vertice);
+
+    visitados[vertice] = 1;
+
+    while(fila.top)
+    {
+        int v = popQueue(&fila);
+
+        printf("%d ", v);
+
+        // Vértices adjacentes.
+        for (int i = 0; i < g->numVertices; i++)
+        {
+            if (existeArestaLista(g, v, i) && !visitados[i])
+            {
+                pushQueue(&fila, i); // Adicionamos na fila.
+
+                visitados[i] = 1; // Evita duplicatas.
+            }
+        }
+    }
+
+    destroiQueue(&fila);
 }
 
 void encontraComponentesLista(GrafoLista *g)
@@ -353,4 +412,150 @@ void dijkstraLista(GrafoLista *g, int origem)
     free(visitados);
     free(filaPrioridade->heap);
     free(filaPrioridade);
+}
+
+/*
+    Créditos: @marifperez
+*/
+void recomendacaoDiretaLista(GrafoLista* g, int vertice, int *recomendacoes)
+{
+    if (g == NULL || recomendacoes == NULL)
+    {
+        printf("grafo nulo\n");
+        return;
+    }
+
+    if (vertice < 0)
+    {
+        printf("vertice invalido\n");
+        return;
+    }
+
+    No* atual = g->listasAdj[vertice];
+
+    if (atual == NULL)
+    {
+        return;
+    }
+
+    int i = 0;
+
+    while (atual != NULL)
+    {
+        recomendacoes[i++] = atual->vertice;
+
+        atual = atual->proximo;
+    }
+}
+
+
+void recomendacaoAmigoDeAmigoLista(GrafoLista* g, int vertice, int* recomendacoes)
+{
+    if (g == NULL)
+    {
+        printf("grafo nulo\n");
+        return;
+    }
+
+    if (vertice < 0)
+    {
+        printf("vertice invalido\n");
+        return;
+    }
+
+    int* visitado = (int*) malloc(g->numVertices * sizeof(int));
+    int* direto = (int*) malloc(g->numVertices * sizeof(int));
+
+    if (!visitado || !direto)
+    {
+        if (visitado)
+            free(visitado);
+
+        if (direto)
+            free(direto);
+
+        printf("\n[RECOMENDACAO-AMIGO-AMIGO-LISTA: Não foi possível alocar memória.\n");
+        return;
+    }
+
+    for (int i = 0; i < g->numVertices; i++)
+    {
+        visitado[i] = 0;
+        direto[i] = 0;
+    }
+
+    No* atual = g->listasAdj[vertice];
+
+    while (atual != NULL)
+    {
+        direto[atual->vertice] = 1;
+        atual = atual->proximo;
+    }
+
+    atual = g->listasAdj[vertice];
+
+    int rIdx = 0; // Indice de recomendacoes.
+
+    while (atual != NULL)
+    {
+        No* segundo = g->listasAdj[atual->vertice];
+
+        while (segundo != NULL)
+        {
+            int m = segundo->vertice;
+
+            if (m != vertice && !direto[m] && !visitado[m])
+            {
+                visitado[m] = 1;
+
+                recomendacoes[rIdx++] = m;
+            }
+
+            segundo = segundo->proximo;
+        }
+
+        atual = atual->proximo;
+    }
+
+    free(visitado);
+    free(direto);
+}
+
+
+bool verificarCaminhoLista(GrafoLista* g, int origem, int destino)
+{
+    if (g == NULL)
+    {
+        return false;
+    }
+    if (origem < 0 || destino < 0)
+    {
+        return false;
+    }
+
+    if (existeArestaLista(g, origem, destino))
+    {
+        return true;
+    }
+
+    int* visitados = (int*) malloc(sizeof(int) * g->numVertices);
+
+    if (visitados == NULL)
+    {
+        printf("erro de memoria\n");
+        return false;
+    }
+
+    for (int i = 0; i < g->numVertices; i++)
+    {
+        visitados[i] = 0;
+    }
+
+    buscaProfundidadeLista(g, origem, visitados);
+
+    int resp = visitados[destino];
+
+    free(visitados);
+
+    return resp == 1;
 }

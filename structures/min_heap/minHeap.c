@@ -1,6 +1,7 @@
 #include "minHeap.h"
 
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 MinHeap *cria_heap(int capacidade)
 {
