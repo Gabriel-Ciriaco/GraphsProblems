@@ -58,7 +58,10 @@ char* musicas[MAX_MUSICAS] = {
     "jailhouse rock - elvis presley",
     "thats what i like - bruno mars",
     "the lazy song - bruno mars",
-    "APT - bruno mars e rose"
+    "APT - bruno mars e rose",
+    "Hino do Corinthians",
+    "Hino do Sao Paulo F.C",
+    "Sou Alvinegro da Vila Belmiro",
 };
 
 void montarGrafo(Grafo* g)
@@ -68,79 +71,110 @@ void montarGrafo(Grafo* g)
         return;
     }
 
-    /* KPOP */
-    insereAresta(g,0,1,1);
-    insereAresta(g,0,2,1);
-    insereAresta(g,0,3,1);
-    insereAresta(g,0,34,1);
-    insereAresta(g,0,37,1);
-    insereAresta(g,1,3,1);
-    insereAresta(g,3,34,1);
-    insereAresta(g,1,28,1);
-    insereAresta(g,31,32,1);
-    insereAresta(g,32,33,1);
-    insereAresta(g,27,28,1);
-    insereAresta(g,27,3,1);
-    insereAresta(g,27,25,1);
+     /* COMBINAÇÕES REPETIDAS - SEGUNDA LISTA TEM PRIORIDADE */
+insereAresta(g,0,2,9);    // boynextdoor - boynextdoor
+insereAresta(g,1,3,8);    // nct - nct wish
+insereAresta(g,27,28,7);  // txt - txt
+insereAresta(g,31,32,10);  // got7 - got7
+insereAresta(g,0,1,10);    // boynextdoor - nct
+insereAresta(g,0,3,8);    // boynextdoor - nct wish
+insereAresta(g,0,34,9);   // boynextdoor - superm
+insereAresta(g,0,37,10);   // boynextdoor - enhypen
+insereAresta(g,3,34,8);   // nct wish - superm
+insereAresta(g,32,33,10);  // got7 - exo
+insereAresta(g,13,14,8);  // green day - green day
+insereAresta(g,41,42,9);  // legiao urbana - legiao urbana
+insereAresta(g,45,46,10);  // skank - skank
+insereAresta(g,35,36,9);  // oasis - arctic monkeys
+insereAresta(g,6,7,10);    // ed sheeran - ed sheeran
+insereAresta(g,8,9,9);    // one direction - one direction
+insereAresta(g,49,50,7);  // bruno mars - bruno mars
+insereAresta(g,4,5,9);    // shawn mendes - taylor swift
+insereAresta(g,5,6,7);    // taylor swift - ed sheeran
+insereAresta(g,4,8,9);    // shawn mendes - one direction
+insereAresta(g,29,30,6);  // 5sos - maroon 5
+insereAresta(g,19,20,10);  // turma do pagode - turma do pagode
+insereAresta(g,20,21,9);  // turma do pagode - pixote
+insereAresta(g,21,22,10);  // pixote - thiaguinho
+insereAresta(g,23,24,10);  // mamonas - mamonas
+insereAresta(g,10,11,8);  // racionais - gabriel pensador
+insereAresta(g,11,12,7);  // gabriel pensador - gabriel pensador
+insereAresta(g,41,43,7);  // legiao urbana - raimundos
+insereAresta(g,46,47,6);  // skank - skank
+insereAresta(g,50,51,7);  // bruno mars - bruno mars
 
-    /* RAP */
-    insereAresta(g,10,11,1);
-    insereAresta(g,11,12,1);
-    insereAresta(g,10,12,1);
 
-    /* ROCK */
-    insereAresta(g,13,14,1);
-    insereAresta(g,13,15,1);
-    insereAresta(g,16,17,1);
-    insereAresta(g,17,18,1);
-    insereAresta(g,15,16,1);
-    insereAresta(g,16,35,1);
-    insereAresta(g,18,36,1);
+insereAresta(g,1,28,6);   // nct - txt
+insereAresta(g,27,25,4);  // txt - kateyes
+insereAresta(g,13,15,7);  // green day - red hot
+insereAresta(g,16,17,8);  // the killers - linkin park
+insereAresta(g,17,18,9);  // linkin park - mcr
+insereAresta(g,15,16,7);  // red hot - the killers
+insereAresta(g,16,35,6);  // the killers - oasis
+insereAresta(g,18,36,7);  // mcr - arctic monkeys
+insereAresta(g,4,9,7);    // shawn mendes - one direction
+insereAresta(g,6,8,6);    // ed sheeran - one direction
+insereAresta(g,7,5,7);    // ed sheeran - taylor swift
+insereAresta(g,22,19,8);  // thiaguinho - turma do pagode
+insereAresta(g,49,51,9);  // bruno mars - bruno mars e rose
+insereAresta(g,45,47,10); // skank - skank
+insereAresta(g,42,43,7);  // legiao urbana - raimundos
+insereAresta(g,9,29,6);   // one direction - 5sos
+insereAresta(g,48,35,5);  // elvis - oasis
+//--------------------------------------------------
 
-    /* POP */
-    insereAresta(g,4,5,1);
-    insereAresta(g,5,6,1);
-    insereAresta(g,6,7,1);
-    insereAresta(g,4,9,1);
-    insereAresta(g,8,9,1);
-    insereAresta(g,4,8,1);
-    insereAresta(g,6,8,1);
-    insereAresta(g,7,5,1);
 
-    /* PAGODE */
-    insereAresta(g,19,20,1);
-    insereAresta(g,20,21,1);
-    insereAresta(g,21,22,1);
-    insereAresta(g,22,19,1);
+insereAresta(g,37,38,7);  // enhypen - enhypen
+insereAresta(g,0,27,6);   // boynextdoor - txt
+insereAresta(g,1,27,6);   // nct - txt
+insereAresta(g,26,3,8);   // huntrix - nct wish
+insereAresta(g,34,33,9);  // superm - exo
+insereAresta(g,34,1,9);   // superm - nct
+insereAresta(g,13,16,10); // green day - the killers
+insereAresta(g,14,17,8);  // green day - linkin park
+insereAresta(g,16,36,3);  // the killers - arctic monkeys
+insereAresta(g,42,45,9);  // legiao urbana - skank
+insereAresta(g,39,40,1);  // olivia rodrigo - sabrina carpenter
+insereAresta(g,36,41,6);  // arctic monkeys - legiao urbana
+insereAresta(g,36,42,5);  // arctic monkeys - legiao urbana
+insereAresta(g,36,6,3);   // arctic monkeys - ed sheeran
 
-    /* MAMONAS */
-    insereAresta(g,23,24,1);
+/*  ENTRE GNEROS DIFERENTES */
+insereAresta(g,1,16,4);   // nct - the killers
+insereAresta(g,27,5,5);   // txt - taylor swift
+insereAresta(g,34,30,3);  // superm - maroon 5
+insereAresta(g,27,9,7);   // txt - one direction
+insereAresta(g,13,29,7);  // green day - 5sos
+insereAresta(g,17,30,1);  // linkin park - maroon 5
+insereAresta(g,36,5,2);   // arctic monkeys - taylor swift
+insereAresta(g,35,6,6);   // oasis - ed sheeran
+insereAresta(g,15,41,7);  // red hot - legiao urbana
+insereAresta(g,17,43,6);  // linkin park - raimundos
+insereAresta(g,14,45,6);  // green day - skank
+insereAresta(g,4,22,1);   // shawn mendes - thiaguinho
+insereAresta(g,6,20,1);   // ed sheeran - turma do pagode
+insereAresta(g,49,19,1);  // bruno mars - turma do pagode
+insereAresta(g,10,17,2);  // racionais - linkin park
+insereAresta(g,11,36,1);  // gabriel pensador - arctic monkeys
+insereAresta(g,12,43,7);  // gabriel pensador - raimundos
+insereAresta(g,23,13,1);  // mamonas - green day
+insereAresta(g,24,19,1);  // mamonas - pagode
+insereAresta(g,23,10,2);  // mamonas - racionais
+insereAresta(g,24,49,1);  // mamonas - bruno mars
+insereAresta(g,10,6,1);   // racionais - ed sheeran
+insereAresta(g,17,20,1);  // linkin park - turma do pagode
+insereAresta(g,33,41,1);  // exo - legiao urbana
+insereAresta(g,28,43,1);  // txt - raimundos
 
-    /* INDIE */
-    insereAresta(g,35,36,1);
-    insereAresta(g,16,35,1);
+insereAresta(g,15,54,1);  // red hot - hino santos
+insereAresta(g,48,13,3);  // elvis - green day
+insereAresta(g,48,5,4);   // elvis - taylor swift
 
-    /* BRUNO MARS */
-    insereAresta(g,49,50,1);
-    insereAresta(g,49,51,1);
-    insereAresta(g,50,51,1);
 
-    /* SKANK */
-    insereAresta(g,45,46,1);
-    insereAresta(g,46,47,1);
-    insereAresta(g,45,47,1);
-
-    /* LEGIAO / RAIMUNDOS */
-    insereAresta(g,41,42,1);
-    insereAresta(g,42,43,1);
-    insereAresta(g,41,43,1);
-
-    /* POP ROCK */
-    insereAresta(g,29,30,1);
-    insereAresta(g,9,29,1);
-
-    /* ELVIS */
-    insereAresta(g,48,35,1);
+/* HINOS  */
+insereAresta(g,52,53,1);  // corinthians - sao paulo
+insereAresta(g,52,54,1);  // corinthians - santos
+insereAresta(g,53,54,3);  // sao paulo - santos
 }
 
 

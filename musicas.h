@@ -5,7 +5,7 @@
 
 #include <stdbool.h>
 
-#define MAX_MUSICAS 52
+#define MAX_MUSICAS 55
 #define NUM_MUSICAS_BASE_PLAYLIST 3
 #define MUSICA_NAO_RECOMENDADA -1
 
