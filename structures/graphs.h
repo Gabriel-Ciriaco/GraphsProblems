@@ -42,12 +42,14 @@ typedef struct
 
     void (*encontraComponentes)(void *impl);
 
-    void (*dijkstra)(void *impl, int origem);
+    int* (*dijkstra)(void *impl, int origem);
 
     void (*recomendacaoDireta)(void *impl, int vertice, int* recomendacoes);
     void (*recomendacaoAmigoDeAmigo)(void *impl, int vertice, int* recomendacoes);
 
     bool (*verificarCaminho)(void* impl, int origem, int destino);
+
+    int* (*prim)(void* impl);
 
 } OperacoesGrafos;
 
@@ -89,7 +91,7 @@ void buscaProfundidade(Grafo *g, int vertice, int *visitados);
 
 void buscaLargura(Grafo *g, int vertice, int *visitados);
 
-void dijkstra(Grafo *g, int origem);
+int* dijkstra(Grafo *g, int origem);
 
 void recomendacaoDireta(Grafo *g, int vertice, int * recomendacoes);
 
@@ -98,5 +100,7 @@ void recomendacaoAmigoDeAmigo(Grafo *g, int vertice, int * recomendacoes);
 void encontraComponentes(Grafo *g);
 
 bool verificarCaminho(Grafo* g, int origem, int destino);
+
+int* prim(Grafo *g);
 
 #endif // GRAPHS_H_INCLUDED

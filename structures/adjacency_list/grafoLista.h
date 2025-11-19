@@ -40,7 +40,7 @@ void buscaLarguraLista(GrafoLista *g, int vertice, int *visitados);
 
 void encontraComponentesLista(GrafoLista *g);
 
-void dijkstraLista(GrafoLista *g, int origem);
+int* dijkstraLista(GrafoLista *g, int origem);
 
 void recomendacaoDiretaLista(GrafoLista* g, int vertice, int* recomendacoes);
 
@@ -52,6 +52,6 @@ int chaveMinimaLista(GrafoLista *g, int *chaves, int *setMST);
 
 void imprimeMSTLista(GrafoLista *g, int *pai);
 
-void primLista(GrafoLista *g);
+int* primLista(GrafoLista *g);
 
 #endif // GRAFO_LISTA_H_INCLUDED

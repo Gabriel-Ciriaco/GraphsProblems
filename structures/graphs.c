@@ -35,10 +35,11 @@ OperacoesGrafos escolheOperacoes(int tipo)
         operacoes.buscaProfundidade = (void (*)(void*,int,int*)) buscaProfundidadeLista;
         operacoes.buscaLargura = (void (*) (void*,int,int*)) buscaLarguraLista;
         operacoes.encontraComponentes = (void (*)(void*)) encontraComponentesLista;
-        operacoes.dijkstra = (void (*)(void*,int)) dijkstraLista;
+        operacoes.dijkstra = (int* (*)(void*,int)) dijkstraLista;
         operacoes.recomendacaoDireta = (void (*) (void*, int, int*)) recomendacaoDiretaLista;
         operacoes.recomendacaoAmigoDeAmigo = (void (*) (void*, int, int*)) recomendacaoAmigoDeAmigoLista;
         operacoes.verificarCaminho = (bool (*) (void*, int, int)) verificarCaminhoLista;
+        operacoes.prim = (int* (*) (void*)) primLista;
     }
     else if (MATRIZ_ADJACENCIA)
     {
@@ -53,10 +54,11 @@ OperacoesGrafos escolheOperacoes(int tipo)
         operacoes.buscaProfundidade = (void (*)(void*,int,int*)) buscaProfundidadeMatriz;
         operacoes.buscaLargura = (void (*) (void*,int,int*)) buscaLarguraMatriz;
         operacoes.encontraComponentes = (void (*)(void*)) encontraComponentesMatriz;
-        operacoes.dijkstra = (void (*)(void*,int)) dijkstraMatriz;
+        operacoes.dijkstra = (int* (*)(void*,int)) dijkstraMatriz;
         operacoes.recomendacaoDireta = (void (*) (void*, int, int*)) recomendacaoDiretaMatriz;
         operacoes.recomendacaoAmigoDeAmigo = (void (*) (void*, int, int*)) recomendacaoAmigoDeAmigoMatriz;
         operacoes.verificarCaminho = (bool (*) (void*, int, int)) verificarCaminhoMatriz;
+        operacoes.prim = (int* (*) (void*)) primMatriz;
     }
 
     return operacoes;
@@ -172,9 +174,9 @@ void encontraComponentes(Grafo *g)
     g->operacoes.encontraComponentes(g->impl);
 }
 
-void dijkstra(Grafo* g, int origem)
+int* dijkstra(Grafo* g, int origem)
 {
-    if (!g) return;
+    if (!g) return NULL;
 
     g->operacoes.dijkstra(g->impl, origem);
 }
@@ -200,4 +202,11 @@ bool verificarCaminho(Grafo* g, int origem, int destino)
         return false;
 
     return g->operacoes.verificarCaminho(g->impl, origem, destino);
+}
+
+int* prim(Grafo* g)
+{
+    if (!g) return NULL;
+
+    return g->operacoes.prim(g->impl);
 }

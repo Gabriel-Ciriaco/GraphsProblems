@@ -33,7 +33,7 @@ void buscaLarguraMatriz(GrafoMatriz *g, int vertice, int *visitados);
 
 void encontraComponentesMatriz(GrafoMatriz *g);
 
-void dijkstraMatriz(GrafoMatriz *g, int origem);
+int* dijkstraMatriz(GrafoMatriz *g, int origem);
 
 void recomendacaoDiretaMatriz(GrafoMatriz* g, int vertice, int* recomendacoes);
 
@@ -45,6 +45,6 @@ int chaveMinimaMatriz(GrafoMatriz *g, int *chaves, int *setMST);
 
 void imprimeMSTMatriz(GrafoMatriz *g, int *pai);
 
-void primMatriz(GrafoMatriz *g);
+int* primMatriz(GrafoMatriz *g);
 
 #endif // GRAFOMATRIZ_H_INCLUDED

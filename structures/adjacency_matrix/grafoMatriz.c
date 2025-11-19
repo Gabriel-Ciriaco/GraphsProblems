@@ -387,7 +387,7 @@ void recomendacaoAmigoDeAmigoMatriz(GrafoMatriz* g, int vertice, int* recomendac
 }
 
 
-void dijkstraMatriz(GrafoMatriz *g, int origem)
+int* dijkstraMatriz(GrafoMatriz *g, int origem)
 {
     int *distancias = malloc(g->numVertices * sizeof(int));
     int *visitados = malloc(g->numVertices * sizeof(int));
@@ -396,7 +396,7 @@ void dijkstraMatriz(GrafoMatriz *g, int origem)
     if(distancias == NULL || visitados == NULL || filaPrioridade == NULL)
     {
         printf("\nErro ao alocar mem�ria!\n");
-        return;
+        return NULL;
     }
 
     for(int i =0; i < g->numVertices; i++)
@@ -436,15 +436,20 @@ void dijkstraMatriz(GrafoMatriz *g, int origem)
         }
     }
 
-    printf("Caminho m�nimo de %d at� todos os v�rtices:\n", origem);
-    for(int i = 0; i < g->numVertices; i++)
-    {
-        printf("%d -> %d: %d\n", origem, i, distancias[i]);
-    }
-    free(distancias);
+    /*
+        printf("Caminho mínimo de %d até todos os vértices:\n", origem);
+        for(int i = 0; i < g->numVertices; i++)
+        {
+            printf("%d -> %d: %d\n", origem, i, distancias[i]);
+        }
+        free(distancias);
+    */
+
     free(visitados);
     free(filaPrioridade->heap);
     free(filaPrioridade);
+
+    return distancias;
 }
 
 
@@ -520,7 +525,7 @@ void imprimeMSTMatriz(GrafoMatriz *g, int *pai)
 	}
 }
 
-void primMatriz(GrafoMatriz *g)
+int* primMatriz(GrafoMatriz *g)
 {
 	//Array que armazena a MST formada
 	int *pai = malloc(g->numVertices * sizeof(int));
@@ -532,7 +537,7 @@ void primMatriz(GrafoMatriz *g)
 	if(pai == NULL || chaves == NULL || setMST == NULL)
 	{
 		printf("\nErro ao alocar memória!\n");
-		return;
+		return NULL;
 	}
 
 	for(int i = 0; i < g->numVertices; i++)
@@ -553,6 +558,8 @@ void primMatriz(GrafoMatriz *g)
 		já fazem parte da MST.
 		*/
 		int u = chaveMinimaMatriz(g, chaves, setMST);
+
+		if (u == -1) continue;
 		// Adiciona o vértice escolhido à MST.
 		setMST[u] = 1;
 
@@ -572,9 +579,8 @@ void primMatriz(GrafoMatriz *g)
 		}
 	}
 
-	imprimeMSTMatriz(g, pai);
+	free(chaves);
+	free(setMST);
 
-	free(pai);
-  free(chaves);
-  free(setMST);
+    return pai;
 }

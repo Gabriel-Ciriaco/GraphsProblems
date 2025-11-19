@@ -267,8 +267,6 @@ void criarPlaylist(Grafo* g, int musicasIds[NUM_MUSICAS_BASE_PLAYLIST]) {
     // add reco diretas de cada musica
     for (int i = 0; i < NUM_MUSICAS_BASE_PLAYLIST; i++)
     {
-        int id = musicasIds[i];
-
         for (int j = 0; j < g->numVertices; j++)
         {
             if (existeAresta(g, i, j) && !incluidos[j])

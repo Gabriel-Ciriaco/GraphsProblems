@@ -346,7 +346,7 @@ void encontraComponentesLista(GrafoLista *g)
 	free(visitados);
 }
 
-void dijkstraLista(GrafoLista *g, int origem)
+int * dijkstraLista(GrafoLista *g, int origem)
 {
     /*
     Cria um array de distâncias dist[]  de tamanho V
@@ -361,7 +361,7 @@ void dijkstraLista(GrafoLista *g, int origem)
         free(distancias);
         free(visitados);
         free(filaPrioridade);
-        return;
+        return NULL;
     }
 
     for(int i = 0; i < g->numVertices; i++)
@@ -403,15 +403,19 @@ void dijkstraLista(GrafoLista *g, int origem)
             no = no->proximo;
         }
     }
+    /*
     printf("Caminho mínimo de %d até todos os vértices:\n", origem);
     for(int i = 0; i < g->numVertices; i++)
     {
         printf("%d -> %d: %d\n", origem, i, distancias[i]);
     }
-    free(distancias);
+    free(distancias);*/
+
     free(visitados);
     free(filaPrioridade->heap);
     free(filaPrioridade);
+
+    return distancias;
 }
 
 
@@ -605,7 +609,7 @@ void imprimeMSTLista(GrafoLista *g, int *pai)
 	}
 }
 
-void primLista(GrafoLista *g)
+int* primLista(GrafoLista *g)
 {
 	//Array que armazena a MST formada
 	int *pai = malloc(g->numVertices * sizeof(int));
@@ -617,7 +621,7 @@ void primLista(GrafoLista *g)
   if(pai == NULL || chaves == NULL || setMST == NULL)
   {
      printf("Erro ao alocar memória!\n");
-     return;
+     return NULL;
   }
 
   for(int i = 0; i < g->numVertices; i++)
@@ -638,6 +642,7 @@ void primLista(GrafoLista *g)
 		já fazem parte da MST.
 		*/
 	  int u =  chaveMinimaLista(g, chaves,  setMST);
+	  if (u == -1) continue;
 	  // Adiciona o vértice escolhido à MST.
 	  setMST[u] = 1;
 
@@ -661,10 +666,8 @@ void primLista(GrafoLista *g)
 	  }
   }
 
-  imprimeMSTLista(g, pai);
-
-  free(pai);
   free(chaves);
   free(setMST);
 
+  return pai;
 }
