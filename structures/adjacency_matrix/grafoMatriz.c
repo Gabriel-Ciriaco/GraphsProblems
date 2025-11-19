@@ -487,3 +487,94 @@ bool verificarCaminhoMatriz(GrafoMatriz* g, int origem, int destino)
 
     return resp == 1;
 }
+
+/*
+Função auxiliar que ajuda a encontrar o vértice
+com o menor valor de chave e que ainda não
+faz parte da MST.
+*/
+int chaveMinimaMatriz(GrafoMatriz *g, int *chaves, int *setMST)
+{
+	int chaveMinima = INT_MAX;
+	int verticeMinimo = -1;
+
+	for(int i = 0; i < g->numVertices; i++)
+	{
+		if((setMST[i] == 0) && (chaves[i] < chaveMinima))
+		{
+			chaveMinima = chaves[i];
+			verticeMinimo = i;
+		}
+	}
+
+	return verticeMinimo;
+}
+
+//função auxiliar para imprimir a MST formada
+void imprimeMSTMatriz(GrafoMatriz *g, int *pai)
+{
+	printf("Aresta \tPeso\n");
+	for(int i = 1; i < g->numVertices; i++)
+	{
+		printf("%d -%d \t%d\n", pai[i], i, g->matriz[pai[i]][i]);
+	}
+}
+
+void primMatriz(GrafoMatriz *g)
+{
+	//Array que armazena a MST formada
+	int *pai = malloc(g->numVertices * sizeof(int));
+	//Valor de chaves para pegar a aresta com menor peso
+	int *chaves = malloc(g->numVertices * sizeof(int));
+	//Representa os vértices que já foram incluídos na MST
+	int *setMST = malloc(g->numVertices * sizeof(int));
+
+	if(pai == NULL || chaves == NULL || setMST == NULL)
+	{
+		printf("\nErro ao alocar memória!\n");
+		return;
+	}
+
+	for(int i = 0; i < g->numVertices; i++)
+	{
+		chaves[i] = INT_MAX;
+		setMST[i] = 0;
+		pai[i] = -1;
+	}
+
+	//Decidindo o primeiro vértice da MST.
+	chaves[0] = 0;
+
+	for(int i = 0; i < g->numVertices - 1; i++)
+	{
+		/*
+		Escolhe o vértice com o menor valor de chave
+		e que não está no conjunto de vértices que
+		já fazem parte da MST.
+		*/
+		int u = chaveMinimaMatriz(g, chaves, setMST);
+		// Adiciona o vértice escolhido à MST.
+		setMST[u] = 1;
+
+		/*
+		Atualização dos valores de chave e dos pais
+		dos vértices que não fazem parte da MST.
+		*/
+		for(int v = 0; v < g->numVertices; v++)
+		{
+			int peso = g->matriz[u][v];
+
+			if(peso > 0 && !setMST[v] && peso < chaves[v])
+			{
+				chaves[v] = peso;
+				pai[v] = u;
+			}
+		}
+	}
+
+	imprimeMSTMatriz(g, pai);
+
+	free(pai);
+  free(chaves);
+  free(setMST);
+}

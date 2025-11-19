@@ -557,3 +557,114 @@ bool verificarCaminhoLista(GrafoLista* g, int origem, int destino)
 
     return resp == 1;
 }
+
+/*
+Função auxiliar que ajuda a encontrar o vértice
+com o menor valor de chave e que ainda não
+faz parte da MST.
+*/
+int chaveMinimaLista(GrafoLista *g, int *chaves, int *setMST)
+{
+	int chaveMinima = INT_MAX;
+	int verticeMinimo = -1;
+
+	for(int i = 0; i < g->numVertices; i++)
+	{
+		if(!setMST[i] && chaves[i] < chaveMinima)
+		{
+			chaveMinima = chaves[i];
+			verticeMinimo = i;
+		}
+	}
+
+	return verticeMinimo;
+
+}
+
+//função auxiliar para imprimir a MST formada
+void imprimeMSTLista(GrafoLista *g, int *pai)
+{
+	printf("Aresta \tPeso\n");
+
+	for(int v = 1; v < g->numVertices; v++)
+	{
+		No *atual = g->listasAdj[v];
+		int peso = 0;
+
+		while(atual != NULL)
+		{
+			if(atual->vertice == pai[v])
+			{
+				peso = atual->peso;
+				break;
+			}
+			atual = atual->proximo;
+		}
+
+		printf("%d - %d \t%d\n", pai[v], v, peso);
+	}
+}
+
+void primLista(GrafoLista *g)
+{
+	//Array que armazena a MST formada
+	int *pai = malloc(g->numVertices * sizeof(int));
+	//Valor de chaves para pegar a aresta com menor peso
+	int *chaves = malloc(g->numVertices * sizeof(int));
+	//Representa os vértices que já foram incluídos na MST
+	int *setMST = malloc(g->numVertices * sizeof(int));
+
+  if(pai == NULL || chaves == NULL || setMST == NULL)
+  {
+     printf("Erro ao alocar memória!\n");
+     return;
+  }
+
+  for(int i = 0; i < g->numVertices; i++)
+  {
+	   chaves[i] = INT_MAX;
+     setMST[i] = 0;
+     pai[i] = -1;
+  }
+
+  //Decidindo o primeiro vértice da MST.
+  chaves[0] = 0;
+
+  for(int i = 0; i < g->numVertices; i++)
+  {
+	  /*
+		Escolhe o vértice com o menor valor de chave
+		e que não está no conjunto de vértices que
+		já fazem parte da MST.
+		*/
+	  int u =  chaveMinimaLista(g, chaves,  setMST);
+	  // Adiciona o vértice escolhido à MST.
+	  setMST[u] = 1;
+
+	  /*
+		Atualização dos valores de chave e dos pais
+		dos vértices que não fazem parte da MST.
+		*/
+	  No *atual = g->listasAdj[u];
+	  while(atual != NULL)
+	  {
+		  int peso = atual->peso;
+		  int vertice = atual->vertice;
+
+		  if(!setMST[vertice] && peso < chaves[vertice])
+		  {
+			  chaves[vertice] = peso;
+			  pai[vertice] = u;
+		  }
+
+		  atual = atual->proximo;
+	  }
+  }
+
+  imprimeMSTLista(g, pai);
+
+  free(pai);
+  free(chaves);
+  free(setMST);
+
+}

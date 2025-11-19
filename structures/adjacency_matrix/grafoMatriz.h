@@ -41,4 +41,10 @@ void recomendacaoAmigoDeAmigoMatriz(GrafoMatriz* g, int vertice, int* recomendac
 
 bool verificarCaminhoMatriz(GrafoMatriz* g, int origem, int destino);
 
+int chaveMinimaMatriz(GrafoMatriz *g, int *chaves, int *setMST);
+
+void imprimeMSTMatriz(GrafoMatriz *g, int *pai);
+
+void primMatriz(GrafoMatriz *g);
+
 #endif // GRAFOMATRIZ_H_INCLUDED

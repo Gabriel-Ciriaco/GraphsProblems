@@ -48,4 +48,10 @@ void recomendacaoAmigoDeAmigoLista(GrafoLista* g, int vertice, int * recomendaco
 
 bool verificarCaminhoLista(GrafoLista* g, int origem, int destino);
 
+int chaveMinimaLista(GrafoLista *g, int *chaves, int *setMST);
+
+void imprimeMSTLista(GrafoLista *g, int *pai);
+
+void primLista(GrafoLista *g);
+
 #endif // GRAFO_LISTA_H_INCLUDED
