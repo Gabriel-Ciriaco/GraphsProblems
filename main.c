@@ -126,11 +126,11 @@ int main()
 
             if (verificarCaminho(g, a, b))
             {
-                printf("\nexiste caminho\n");
+                printf("\n\nexiste caminho\n");
             }
             else
             {
-                printf("nao existe caminho\n");
+                printf("\n\nnao existe caminho\n");
             }
         }
 
