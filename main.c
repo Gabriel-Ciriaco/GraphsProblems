@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <locale.h>
 
+
 /* exibe catalogo */
 void exibirListaMusicas() {
     printf("\n=========== CATALOGO ===========\n");
@@ -47,8 +48,6 @@ int main()
         return 0;
     }
 
-    int opcao = -1;
-
     Grafo* g = criaGrafo(tipo, MAX_MUSICAS);
 
     if (g == NULL)
@@ -56,6 +55,8 @@ int main()
         printf("erro ao criar grafo lista\n");
         return 0;
     }
+
+    int opcao = -1;
 
     montarGrafo(g);
 

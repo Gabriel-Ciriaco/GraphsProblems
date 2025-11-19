@@ -26,7 +26,7 @@ typedef struct
 {
     void (*destroi)(void *impl);
 
-    void (*insereAresta)(void *impl, int origem, int destino);
+    void (*insereAresta)(void *impl, int origem, int destino, int peso);
     void (*removeAresta)(void *impl, int origem, int destino);
 
     bool (*existeAresta)(void *impl, int origem, int destino);
@@ -41,6 +41,8 @@ typedef struct
     void (*buscaLargura) (void *impl, int vertice, int *visitados);
 
     void (*encontraComponentes)(void *impl);
+
+    void (*dijkstra)(void *impl, int origem);
 
     void (*recomendacaoDireta)(void *impl, int vertice, int* recomendacoes);
     void (*recomendacaoAmigoDeAmigo)(void *impl, int vertice, int* recomendacoes);
@@ -69,7 +71,7 @@ Grafo* criaGrafo(int tipoImplGrafo, int vertices);
 
 void destroiGrafo(Grafo *g);
 
-void insereAresta(Grafo *g, int origem, int destino);
+void insereAresta(Grafo *g, int origem, int destino, int peso);
 
 void removeAresta(Grafo *g, int origem, int destino);
 
@@ -86,6 +88,8 @@ int encontraMaisPopular(Grafo *g);
 void buscaProfundidade(Grafo *g, int vertice, int *visitados);
 
 void buscaLargura(Grafo *g, int vertice, int *visitados);
+
+void dijkstra(Grafo *g, int origem);
 
 void recomendacaoDireta(Grafo *g, int vertice, int * recomendacoes);
 

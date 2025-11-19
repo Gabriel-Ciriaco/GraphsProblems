@@ -394,7 +394,7 @@ void dijkstraLista(GrafoLista *g, int origem)
             int vertice = no->vertice;
             int peso = no->peso;
 
-            if((distancias[u]) != INT_MAX && ((distancias[u] + peso) < distancias[vertice]))
+            if((distancias[u] != INT_MAX) && ((distancias[u] + peso) < distancias[vertice]))
             {
                 distancias[vertice] = distancias[u] + peso;
                 push(filaPrioridade, vertice, distancias[vertice]);
@@ -414,9 +414,7 @@ void dijkstraLista(GrafoLista *g, int origem)
     free(filaPrioridade);
 }
 
-/*
-    Créditos: @marifperez
-*/
+
 void recomendacaoDiretaLista(GrafoLista* g, int vertice, int *recomendacoes)
 {
     if (g == NULL || recomendacoes == NULL)

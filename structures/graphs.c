@@ -25,7 +25,7 @@ OperacoesGrafos escolheOperacoes(int tipo)
     if (tipo == LISTA_ADJACENCIA)
     {
         operacoes.destroi = (void (*)(void*)) destroiGrafoLista;
-        operacoes.insereAresta = (void (*)(void*,int,int)) insereArestaLista;
+        operacoes.insereAresta = (void (*)(void*,int,int,int)) insereArestaLista;
         operacoes.removeAresta = (void (*)(void*,int,int)) removeArestaLista;
         operacoes.existeAresta = (bool (*)(void*,int,int)) existeArestaLista;
         operacoes.imprimeGrafo = (void (*)(void*)) imprimeGrafoLista;
@@ -35,6 +35,7 @@ OperacoesGrafos escolheOperacoes(int tipo)
         operacoes.buscaProfundidade = (void (*)(void*,int,int*)) buscaProfundidadeLista;
         operacoes.buscaLargura = (void (*) (void*,int,int*)) buscaLarguraLista;
         operacoes.encontraComponentes = (void (*)(void*)) encontraComponentesLista;
+        operacoes.dijkstra = (void (*)(void*,int)) dijkstraLista;
         operacoes.recomendacaoDireta = (void (*) (void*, int, int*)) recomendacaoDiretaLista;
         operacoes.recomendacaoAmigoDeAmigo = (void (*) (void*, int, int*)) recomendacaoAmigoDeAmigoLista;
         operacoes.verificarCaminho = (bool (*) (void*, int, int)) verificarCaminhoLista;
@@ -42,7 +43,7 @@ OperacoesGrafos escolheOperacoes(int tipo)
     else if (MATRIZ_ADJACENCIA)
     {
         operacoes.destroi = (void (*)(void*)) destroiGrafoMatriz;
-        operacoes.insereAresta = (void (*)(void*,int,int)) insereArestaMatriz;
+        operacoes.insereAresta = (void (*)(void*,int,int,int)) insereArestaMatriz;
         operacoes.removeAresta = (void (*)(void*,int,int)) removeArestaMatriz;
         operacoes.existeAresta = (bool (*)(void*,int,int)) existeArestaMatriz;
         operacoes.imprimeGrafo = (void (*)(void*)) imprimeGrafoMatriz;
@@ -52,6 +53,7 @@ OperacoesGrafos escolheOperacoes(int tipo)
         operacoes.buscaProfundidade = (void (*)(void*,int,int*)) buscaProfundidadeMatriz;
         operacoes.buscaLargura = (void (*) (void*,int,int*)) buscaLarguraMatriz;
         operacoes.encontraComponentes = (void (*)(void*)) encontraComponentesMatriz;
+        operacoes.dijkstra = (void (*)(void*,int)) dijkstraMatriz;
         operacoes.recomendacaoDireta = (void (*) (void*, int, int*)) recomendacaoDiretaMatriz;
         operacoes.recomendacaoAmigoDeAmigo = (void (*) (void*, int, int*)) recomendacaoAmigoDeAmigoMatriz;
         operacoes.verificarCaminho = (bool (*) (void*, int, int)) verificarCaminhoMatriz;
@@ -96,11 +98,11 @@ void destroiGrafo(Grafo* g)
     free(g);
 }
 
-void insereAresta(Grafo* g, int origem, int destino)
+void insereAresta(Grafo* g, int origem, int destino, int peso)
 {
     if (!g) return;
 
-    g->operacoes.insereAresta(g->impl, origem, destino);
+    g->operacoes.insereAresta(g->impl, origem, destino, peso);
 }
 
 void removeAresta(Grafo *g, int origem, int destino)
@@ -168,6 +170,13 @@ void encontraComponentes(Grafo *g)
     if (!g) return;
 
     g->operacoes.encontraComponentes(g->impl);
+}
+
+void dijkstra(Grafo* g, int origem)
+{
+    if (!g) return;
+
+    g->operacoes.dijkstra(g->impl, origem);
 }
 
 void recomendacaoDireta(Grafo* g, int vertice, int* recomendacoes)
