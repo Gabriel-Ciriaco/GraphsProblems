@@ -160,6 +160,11 @@ bool existeArestaLista(GrafoLista *g, int origem, int destino)
     return false;
 }
 
+void imprimeArestasLista(GrafoLista *g)
+{
+
+}
+
 void imprimeGrafoLista(GrafoLista *g)
 {
     if (g == NULL)
@@ -335,7 +340,7 @@ void dijkstraLista(GrafoLista *g, int origem)
             int vertice = no->vertice;
             int peso = no->peso;
 
-            if((distancias[u]) != INT_MAX && ((distancias[u] + peso) < distancias[vertice]))
+            if((distancias[u] != INT_MAX) && ((distancias[u] + peso) < distancias[vertice]))
             {
                 distancias[vertice] = distancias[u] + peso;
                 push(filaPrioridade, vertice, distancias[vertice]);

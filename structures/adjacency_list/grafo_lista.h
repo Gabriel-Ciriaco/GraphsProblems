@@ -21,6 +21,7 @@ void destroiGrafoLista(GrafoLista *g);
 void insereArestaLista(GrafoLista *g, int origem, int destino, int peso);
 void removeArestaLista(GrafoLista *g, int origem, int destino);
 bool existeArestaLista(GrafoLista *g, int origem, int destino);
+void imprimeArestasLista(GrafoLista *g);
 void imprimeGrafoLista(GrafoLista *g);
 int calculaGrauLista(GrafoLista *g, int vertice);
 int encontraMaisPopularLista(GrafoLista *g);

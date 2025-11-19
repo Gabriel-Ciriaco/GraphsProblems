@@ -1,7 +1,7 @@
 #ifndef GRAPHS_H_INCLUDED
 #define GRAPHS_H_INCLUDED
 
-#include "adjacency_list/grafoLista.h"
+#include "adjacency_list/grafo_lista.h"
 #include "adjacency_matrix/grafoMatriz.h"
 
 #define GRAPH_ERROR -1

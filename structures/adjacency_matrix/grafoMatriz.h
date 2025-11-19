@@ -11,7 +11,7 @@ typedef struct
 
 GrafoMatriz *criaGrafoMatriz(int vertices);
 void destroiGrafoMatriz(GrafoMatriz *g);
-void insereArestaMatriz(GrafoMatriz *g, int origem, int destino);
+void insereArestaMatriz(GrafoMatriz *g, int origem, int destino, int peso);
 void removeArestaMatriz(GrafoMatriz *g, int origem, int destino);
 bool existeArestaMatriz(GrafoMatriz *g, int origem, int destino);
 void imprimeGrafoMatriz(GrafoMatriz *g);
@@ -20,5 +20,6 @@ int calculaGrauMatriz(GrafoMatriz *g, int vertice);
 int encontraMaisPopularMatriz(GrafoMatriz *g);
 void buscaProfundidadeMatriz(GrafoMatriz *g, int vertice, int *visitados);
 void encontraComponentesMatriz(GrafoMatriz *g);
+void dijkstraMatriz(GrafoMatriz *g, int origem);
 
 #endif // GRAFOMATRIZ_H_INCLUDED

@@ -1,8 +1,12 @@
 #include "grafoMatriz.h"
+#include "../minHeap.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include<limits.h>
+
+#define MAX_HEAP 10000
 
 
 GrafoMatriz *criaGrafoMatriz(int vertices)
@@ -16,7 +20,8 @@ GrafoMatriz *criaGrafoMatriz(int vertices)
     g->numVertices = vertices;
 
     g->matriz = (int **)malloc(vertices * sizeof(int *));
-    if (g->matriz == NULL) {
+    if (g->matriz == NULL)
+    {
         free(g);
         return NULL;
     }
@@ -24,12 +29,6 @@ GrafoMatriz *criaGrafoMatriz(int vertices)
     for (int i = 0; i < vertices; i++)
     {
         g->matriz[i] = (int *)malloc(vertices * sizeof(int));
-        if (g->matriz[i] == NULL) {
-            while(i > 0) free(g->matriz[--i]);
-            free(g->matriz);
-            free(g);
-            return NULL;
-        }
     }
 
     for (int i = 0; i < vertices; i++)
@@ -60,7 +59,7 @@ void destroiGrafoMatriz(GrafoMatriz *g)
     free(g);
 }
 
-void insereArestaMatriz(GrafoMatriz *g, int origem, int destino)
+void insereArestaMatriz(GrafoMatriz *g, int origem, int destino, int peso)
 {
     if (g == NULL || origem < 0 || destino < 0 || origem >= g->numVertices || destino >= g->numVertices)
     {
@@ -69,8 +68,8 @@ void insereArestaMatriz(GrafoMatriz *g, int origem, int destino)
 
     if (g->matriz[origem][destino] == 0)
     {
-        g->matriz[origem][destino] = 1;
-        g->matriz[destino][origem] = 1;
+        g->matriz[origem][destino] = peso;
+        g->matriz[destino][origem] = peso;
     }
 }
 
@@ -81,7 +80,7 @@ void removeArestaMatriz(GrafoMatriz *g, int origem, int destino)
         return;
     }
 
-    if (g->matriz[origem][destino] == 1)
+    if (g->matriz[origem][destino] != 0)
     {
         g->matriz[origem][destino] = 0;
         g->matriz[destino][origem] = 0;
@@ -96,7 +95,7 @@ bool existeArestaMatriz(GrafoMatriz *g, int origem, int destino)
         exit(EXIT_FAILURE);
     }
 
-    if (g->matriz[origem][destino] == 1)
+    if (g->matriz[origem][destino] != 0)
     {
         return true;
     }
@@ -196,7 +195,7 @@ void buscaProfundidadeMatriz(GrafoMatriz *g, int vertice, int *visitados)
 	*/
 	for(int i = 0; i < g->numVertices; i++)
 	{
-		if((g->matriz[vertice][i] == 1) && (visitados[i] == 0))
+		if((g->matriz[vertice][i] != 0) && (visitados[i] == 0))
 		{
 			buscaProfundidadeMatriz(g, i, visitados);
 		}
@@ -245,4 +244,64 @@ void encontraComponentesMatriz(GrafoMatriz *g)
 	}
 
 	free(visitados);
+}
+
+void dijkstraMatriz(GrafoMatriz *g, int origem)
+{
+    int *distancias = malloc(g->numVertices * sizeof(int));
+    int *visitados = malloc(g->numVertices * sizeof(int));
+    MinHeap *filaPrioridade = cria_heap(MAX_HEAP);
+
+    if(distancias == NULL || visitados == NULL || filaPrioridade == NULL)
+    {
+        printf("\nErro ao alocar memória!\n");
+        return;
+    }
+
+    for(int i =0; i < g->numVertices; i++)
+    {
+        distancias[i] = INT_MAX;
+        visitados[i] = 0;
+
+    }
+
+    distancias[origem] = 0;
+    push(filaPrioridade, origem, 0);
+
+    while(!empty(filaPrioridade))
+    {
+        Vertice atual = pop(filaPrioridade);
+        int u = atual.v;
+
+        if(visitados[u])
+        {
+            continue;
+        }
+
+        visitados[u] = 1;
+
+        for(int i = 0; i < g->numVertices; i++)
+        {
+            int peso = g->matriz[u][i];
+
+            if(peso > 0)
+            {
+                if(distancias[u] != INT_MAX && (distancias[u] + peso) < distancias[i])
+                {
+                    distancias[i] = distancias[u] + peso;
+                    push(filaPrioridade, i, distancias[i]);
+                }
+            }
+        }
+    }
+
+    printf("Caminho mínimo de %d até todos os vértices:\n", origem);
+    for(int i = 0; i < g->numVertices; i++)
+    {
+        printf("%d -> %d: %d\n", origem, i, distancias[i]);
+    }
+    free(distancias);
+    free(visitados);
+    free(filaPrioridade->heap);
+    free(filaPrioridade);
 }

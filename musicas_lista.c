@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "musicas.h"
-#include "structures/adjacency_list/grafoLista.h"
+#include "structures/adjacency_list/grafo_lista.h"
 
 
 
